@@ -59,7 +59,7 @@ func (r *repo) GetAllClassesForACourse(courseID string) (*[]models.Class, error)
 			return nil, utils.ErrDatabase
 		}
 
-		count := r.DB.Model(&class).Association("StudentsRegistered").Count()
+		count := r.DB.Model(&class).Association("Students").Count()
 		class.StudentsRegistered = count
 		classes = append(classes, class)
 	}
