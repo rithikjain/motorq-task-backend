@@ -89,8 +89,10 @@ func (r *repo) AddClassStudent(studentID, classID string) error {
 
 	clashed := false
 	for _, class := range existingClasses {
-		if classToBeAdded.StartTime.Equal(*class.StartTime) || classToBeAdded.EndTime.Equal(*class.EndTime) {
-			clashed = true
+		if classToBeAdded.Day == class.Day {
+			if classToBeAdded.StartTime.Equal(*class.StartTime) || classToBeAdded.EndTime.Equal(*class.EndTime) {
+				clashed = true
+			}
 		}
 	}
 
