@@ -4,7 +4,8 @@ import "time"
 
 type Class struct {
 	ID           string     `gorm:"default:uuid_generate_v4();primary_key;"`
-	CourseCode   string     `json:"course_code"`
+	CourseID     string     `json:"course_id"`
+	Course       Course     `json:"course,omitempty"`
 	Faculty      string     `json:"faculty"`
 	Day          int        `json:"day"`
 	BuildingName string     `json:"building_name"`
