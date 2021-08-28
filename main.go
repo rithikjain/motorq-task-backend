@@ -5,7 +5,9 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/joho/godotenv"
+	"github.com/rithikjain/motorq-task-backend/api/handler"
 	"github.com/rithikjain/motorq-task-backend/pkg/models"
+	"github.com/rithikjain/motorq-task-backend/pkg/student"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"log"
@@ -73,6 +75,11 @@ func main() {
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Hey there looks like its working 🔥")
 	})
+
+	// Student
+	studentRepo := student.NewRepo(db)
+	studentSvc := student.NewService(studentRepo)
+	handler.MakeStudentHandler(app, studentSvc)
 
 	fmt.Println("Serving...")
 	log.Fatal(app.Listen(GetPort()))

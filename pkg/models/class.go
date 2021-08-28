@@ -11,4 +11,5 @@ type Class struct {
 	Building     Building   `json:"building" gorm:"foreignKey:BuildingName"`
 	StartTime    *time.Time `json:"start_time"`
 	EndTime      *time.Time `json:"end_time"`
+	Students     []Student  `json:"students" gorm:"many2many:student_classes;"`
 }
