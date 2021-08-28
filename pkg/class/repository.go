@@ -73,6 +73,31 @@ func (r *repo) AddClassStudent(studentID, classID string) error {
 	if err != nil {
 		return utils.ErrDatabase
 	}
+
+	var classToBeAdded models.Class
+	var existingClasses []models.Class
+
+	err = r.DB.Where("id=?", classID).First(&classToBeAdded).Error
+	if err != nil {
+		return utils.ErrDatabase
+	}
+
+	err = r.DB.Model(&student).Association("Classes").Find(&existingClasses)
+	if err != nil {
+		return utils.ErrDatabase
+	}
+
+	clashed := false
+	for _, class := range existingClasses {
+		if classToBeAdded.StartTime.Equal(*class.StartTime) || classToBeAdded.EndTime.Equal(*class.EndTime) {
+			clashed = true
+		}
+	}
+
+	if clashed == true {
+		return utils.ErrClash
+	}
+
 	err = r.DB.Model(&student).Association("Classes").Append(&models.Class{ID: classID})
 	if err != nil {
 		return utils.ErrDatabase

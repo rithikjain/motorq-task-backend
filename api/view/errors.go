@@ -27,6 +27,7 @@ var ErrHTTPStatusMap = map[string]int{
 	utils.ErrDatabase.Error():     http.StatusInternalServerError,
 	utils.ErrUnauthorized.Error(): http.StatusUnauthorized,
 	utils.ErrForbidden.Error():    http.StatusForbidden,
+	utils.ErrClash.Error():        http.StatusConflict,
 	ErrMethodNotAllowed.Error():   http.StatusMethodNotAllowed,
 	ErrInvalidToken.Error():       http.StatusBadRequest,
 	ErrUserExists.Error():         http.StatusConflict,
