@@ -8,6 +8,7 @@ import (
 
 type Repository interface {
 	GetAllCourses() (*[]models.Course, error)
+	GetAllClassesForACourse(courseID string) (*[]models.Class, error)
 }
 
 type repo struct {
@@ -27,4 +28,13 @@ func (r *repo) GetAllCourses() (*[]models.Course, error) {
 		return nil, utils.ErrDatabase
 	}
 	return &courses, nil
+}
+
+func (r *repo) GetAllClassesForACourse(courseID string) (*[]models.Class, error) {
+	var classes []models.Class
+	err := r.DB.Where("course_id=?", courseID).Preload("Building").Preload("Course").Find(&classes).Error
+	if err != nil {
+		return nil, utils.ErrDatabase
+	}
+	return &classes, nil
 }
