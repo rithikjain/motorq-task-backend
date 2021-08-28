@@ -52,6 +52,22 @@ func AddStudentToClass(svc class.Service) func(*fiber.Ctx) error {
 	}
 }
 
+func RemoveStudentFromClass(svc class.Service) func(*fiber.Ctx) error {
+	return func(c *fiber.Ctx) error {
+		studentID := c.Params("studentID")
+		classID := c.Params("classID")
+
+		err := svc.RemoveClassStudent(studentID, classID)
+		if err != nil {
+			return view.Wrap(err, c)
+		}
+
+		return c.Status(fiber.StatusOK).JSON(fiber.Map{
+			"message": "Student removed from class",
+		})
+	}
+}
+
 func GetStudentTimetable(svc class.Service) func(*fiber.Ctx) error {
 	return func(c *fiber.Ctx) error {
 		studentID := c.Params("studentID")
@@ -74,5 +90,6 @@ func MakeClassHandler(app *fiber.App, svc class.Service) {
 	classGroup.Get("/fetch/:courseID", GetAllClassesForACourse(svc))
 	classGroup.Get("/map/:courseID", GetAllClassesForACourse(svc))
 	classGroup.Post("/addStudent/:studentID/:classID", AddStudentToClass(svc))
+	classGroup.Delete("/removeStudent/:studentID/:classID", RemoveStudentFromClass(svc))
 	classGroup.Get("/timetable/:studentID", GetStudentTimetable(svc))
 }

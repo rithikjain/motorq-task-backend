@@ -11,6 +11,7 @@ type Repository interface {
 	GetAllCourses() (*[]models.Course, error)
 	GetAllClassesForACourse(courseID string) (*[]models.Class, error)
 	AddClassStudent(studentID, classID string) error
+	RemoveClassStudent(studentID, classID string) error
 	GetEnrolledClasses(studentID string) (*[]models.Class, error)
 }
 
@@ -73,6 +74,20 @@ func (r *repo) AddClassStudent(studentID, classID string) error {
 		return utils.ErrDatabase
 	}
 	err = r.DB.Model(&student).Association("Classes").Append(&models.Class{ID: classID})
+	if err != nil {
+		return utils.ErrDatabase
+	}
+
+	return nil
+}
+
+func (r *repo) RemoveClassStudent(studentID, classID string) error {
+	var student models.Student
+	err := r.DB.Where("LOWER(roll_no)=?", strings.ToLower(studentID)).First(&student).Error
+	if err != nil {
+		return utils.ErrDatabase
+	}
+	err = r.DB.Model(&student).Association("Classes").Delete(&models.Class{ID: classID})
 	if err != nil {
 		return utils.ErrDatabase
 	}

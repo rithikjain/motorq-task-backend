@@ -9,6 +9,7 @@ type Service interface {
 	GetAllCourses() (*[]models.Course, error)
 	GetAllClassesForACourse(courseID string) (*[]models.Class, error)
 	AddClassStudent(studentID, classID string) error
+	RemoveClassStudent(studentID, classID string) error
 	GetEnrolledClasses(studentID string) (*[]models.Class, error)
 }
 
@@ -43,6 +44,10 @@ func (s *service) GetAllClassesForACourse(courseID string) (*[]models.Class, err
 
 func (s *service) AddClassStudent(studentID, classID string) error {
 	return s.repo.AddClassStudent(studentID, classID)
+}
+
+func (s *service) RemoveClassStudent(studentID, classID string) error {
+	return s.repo.RemoveClassStudent(studentID, classID)
 }
 
 func (s *service) GetEnrolledClasses(studentID string) (*[]models.Class, error) {
