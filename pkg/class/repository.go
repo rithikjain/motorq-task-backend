@@ -101,5 +101,11 @@ func (r *repo) GetEnrolledClasses(studentID string) (*[]models.Class, error) {
 	if err != nil {
 		return nil, utils.ErrDatabase
 	}
+
+	for i := 0; i < len(classes); i++ {
+		count := r.DB.Model(&classes[i]).Association("Students").Count()
+		classes[i].StudentsRegistered = count
+	}
+
 	return &classes, nil
 }
