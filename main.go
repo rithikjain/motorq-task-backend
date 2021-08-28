@@ -6,6 +6,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/joho/godotenv"
 	"github.com/rithikjain/motorq-task-backend/api/handler"
+	"github.com/rithikjain/motorq-task-backend/pkg/class"
 	"github.com/rithikjain/motorq-task-backend/pkg/models"
 	"github.com/rithikjain/motorq-task-backend/pkg/student"
 	"gorm.io/driver/postgres"
@@ -80,6 +81,11 @@ func main() {
 	studentRepo := student.NewRepo(db)
 	studentSvc := student.NewService(studentRepo)
 	handler.MakeStudentHandler(app, studentSvc)
+
+	// Class
+	classRepo := class.NewRepo(db)
+	classSvc := class.NewService(classRepo)
+	handler.MakeClassHandler(app, classSvc)
 
 	fmt.Println("Serving...")
 	log.Fatal(app.Listen(GetPort()))
