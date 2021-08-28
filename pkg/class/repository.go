@@ -94,6 +94,7 @@ func (r *repo) AddClassStudent(studentID, classID string) error {
 		}
 	}
 
+	// set clashed true
 	if clashed == true {
 		return utils.ErrClash
 	}
