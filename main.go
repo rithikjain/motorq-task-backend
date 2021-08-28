@@ -5,6 +5,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/joho/godotenv"
+	"github.com/rithikjain/motorq-task-backend/pkg/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"log"
@@ -56,7 +57,12 @@ func main() {
 	}
 
 	// Migrating tables
-	err = db.AutoMigrate()
+	err = db.AutoMigrate(
+		&models.Student{},
+		&models.Building{},
+		&models.Course{},
+		&models.Class{},
+	)
 	if err != nil {
 		log.Fatal(err.Error())
 	}

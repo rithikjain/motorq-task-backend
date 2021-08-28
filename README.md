@@ -14,4 +14,3 @@
 | dbName   | vitclasses |
 | sslmode  | disable    |
 | PORT     | 5000       |
-| jwtSecret| secret     |
