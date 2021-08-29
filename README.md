@@ -1,5 +1,11 @@
 # Motorq Task Backend
 
+### Documentation
+![Docs](https://documenter.getpostman.com/view/10198604/TzzHmtB3)
+
+### Hosted URL
+![https://vitclass.herokuapp.com/](https://vitclass.herokuapp.com/)
+
 ### Database Model
 ![](/assets/db_model.png)
 
