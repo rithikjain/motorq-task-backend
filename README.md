@@ -9,6 +9,11 @@
 ### Database Model
 ![](/assets/db_model.png)
 
+### Populated Database
+![](/assets/buildings_db.png)
+![](/assets/classes_db.png)
+![](/assets/courses_db.png)
+
 ### Sample .env config
 | Key      | Value      |
 | -------- | ---------- |
